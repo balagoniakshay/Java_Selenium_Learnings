@@ -24,6 +24,5 @@ public class JumpingStatements {
             System.out.println(i);
         }
 
-
     }
 }
