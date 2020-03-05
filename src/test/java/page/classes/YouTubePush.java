@@ -11,7 +11,6 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class YouTubePush {
@@ -20,7 +19,8 @@ public class YouTubePush {
     static String baseURL;
 
     @BeforeTest
-    public void setup() throws InterruptedException {
+    public void setup() throws InterruptedException
+    {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         baseURL = "https://qa1.draco.turner.com";
@@ -37,8 +37,8 @@ public class YouTubePush {
 
 
     @Test
-    public static void install_youtube() {
-
+    public static void install_youtube()
+    {
         driver.findElement(By.id("toolbar-link-system-modules_list")).click();
         driver.findElement(By.xpath(" //input[@id='edit-text']")).sendKeys("YouTube Push");
         driver.findElement(By.xpath("//input[@id='edit-modules-yt-push-enable']")).click();
@@ -47,7 +47,8 @@ public class YouTubePush {
     }
 
     @Test
-    public static void  verify_YouTube_Test_Module_Installed() {
+    public static void  verify_YouTube_Test_Module_Installed()
+    {
         driver.findElement(By.id("toolbar-link-system-modules_list")).click();
     }
 
@@ -94,29 +95,13 @@ public class YouTubePush {
     }
 
     @Test
-    public static void createFieldsToYouTubeMediaType()
+    public void createFieldsToYouTubeMediaType()
     {
-        driver.findElement(By.xpath(" //a[@id='toolbar-link-system-admin_structure']")).click();
-        driver.findElement(By.xpath("//span[contains(text(),'Media types')]")).click();
-
-//        int rows = driver.findElements(By.tagName("tr")).size();
-
-        int rows = driver.findElements(By.xpath("/html[1]/body[1]/div[2]/div[1]/main[1]/div[4]/div[2]/table[1]/tbody[1]/tr")).size();
-        System.out.println(rows);
-
-        int coloumns = driver.findElements(By.xpath("/html[1]/body[1]/div[2]/div[1]/main[1]/div[4]/div[2]/table[1]/tbody[1]/tr[1]/td")).size();
-
-        System.out.println(coloumns);
-
-
-        for (int r =2;r<=rows;r++){
-
-            for (int c=1;c<coloumns;c++)
-            {
-                String value = driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[1]/main[1]/div[4]/div[2]/table[1]/tbody[1]/tr["+r+"]/td["+c+"]")).getText();
-                System.out.println(value);
-            }
-        }
+        YouTubeReusableMethods youtube = new YouTubeReusableMethods(driver);
+        youtube.navigateToMediaTypePage();
+        youtube.clickOnTheEditIfRowIsMatching("YouTube");
+        youtube.navigateToYouTubeAddFieldsPage();
+        youtube.createYouTubePrivacyField();
     }
 
     @AfterTest

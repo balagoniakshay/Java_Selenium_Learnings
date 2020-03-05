@@ -18,13 +18,13 @@ public class Homepage {
         element.click();
     }
 
-    private static WebElement structureLink(WebDriver driver){
+    private static WebElement structure(WebDriver driver){
         element =  driver.findElement(By.linkText("Structure"));
         return element;
     }
 
-    public void clickStructureLink(WebDriver driver){
-        element = structureLink(driver);
+    public void clickStructure(WebDriver driver){
+        element = structure(driver);
         element.click();
     }
 

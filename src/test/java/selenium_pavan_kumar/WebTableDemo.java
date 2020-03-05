@@ -60,13 +60,32 @@ public class WebTableDemo {
 
 
     @Test
-    public static void orangeHRMWebTable()
+    public static void WebTableDemo()
     {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
 
-        int rows = driver.findElements(By.tagName("tr")).size();
+        driver.get("");
+
+//      int rows = driver.findElements(By.tagName("tr")).size();  //In a webpage if there is only single table we should use tagname
+
+//      int rows = driver.findElements(By.xpath("/html/body/table/tbody/tr")).size(); //
+
+        //WebTable
+        int rows=driver.findElements(By.xpath("//tr[1]//td[2]//a")).size();
         System.out.println(rows);
+
+        int columns=driver.findElements(By.xpath("/html/body/table/tbody/tr[1]/th")).size();
+        System.out.println(columns);
+
+        for (int r =2;r<=rows;r++){
+
+            for (int c=1;c<columns;c++)
+            {
+                String value = driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[1]/main[1]/div[4]/div[2]/table[1]/tbody[1]/tr["+r+"]/td["+c+"]")).getText();
+                System.out.println(value);
+            }
+        }
     }
 
     @AfterMethod

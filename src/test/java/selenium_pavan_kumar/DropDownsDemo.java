@@ -22,8 +22,8 @@ public class DropDownsDemo
         driver.get("https://goo.gl/RVdKM9"); //NavigateBrowserDemo to the URL
 
         //DropDown - Select
-        WebElement DropDown = driver.findElement(By.xpath("//select[@id='RESULT_RadioButton-9']"));
-        Select bestTimeToContactDropDown =  new Select(DropDown);
+        WebElement dropDown = driver.findElement(By.xpath("//select[@id='RESULT_RadioButton-9']"));
+        Select bestTimeToContactDropDown =  new Select(dropDown);
         List<WebElement> options = bestTimeToContactDropDown.getOptions();
         for (WebElement e:options)
         {
@@ -34,7 +34,6 @@ public class DropDownsDemo
         bestTimeToContactDropDown.selectByIndex(0);
         bestTimeToContactDropDown.selectByVisibleText("Afternoon");
         bestTimeToContactDropDown.selectByValue("Radio-2");
-
         driver.quit();
 
     }
