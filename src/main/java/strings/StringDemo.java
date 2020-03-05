@@ -9,7 +9,7 @@ public class StringDemo {
     String s=new String(ch);
     is Same as: String s="javatpoint";
 
-    Java String class provides a lot of methods to perform operations on string such as compare(), concat(), equals(), split(),
+    Java String class provides a lot of Calculation_methods to perform operations on string such as compare(), concat(), equals(), split(),
     length(), replace(), compareTo(), intern(), substring() etc.
      */
     public static void main(String[] args) {
@@ -55,7 +55,7 @@ public class StringDemo {
         System.out.println("The String s is equals to 'welcome' is " +s.equalsIgnoreCase("welcome"));
 
         System.out.println("*************************************************************");
-        //8.replace(): Returns a string, replacing the old characters or CharSequence to new characters. There are 2 ways to replace methods.
+        //8.replace(): Returns a string, replacing the old characters or CharSequence to new characters. There are 2 ways to replace Calculation_methods.
         System.out.println("Replace The String Welcome with " + s.replace('l','!'));
         System.out.println("Replace the String Welcome with " + s.replace("Welcome","Selenium"));
 
