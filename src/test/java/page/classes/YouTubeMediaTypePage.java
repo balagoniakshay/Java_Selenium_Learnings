@@ -61,7 +61,7 @@ public class YouTubeMediaTypePage {
 
     public static WebElement saveFieldSettings(WebDriver driver)
     {
-        element = driver.findElement(By.xpath("//div[@id='edit-actions']"));
+        element = driver.findElement(By.xpath("//input[@data-drupal-selector='edit-submit']"));
         return element;
     }
 
@@ -73,7 +73,7 @@ public class YouTubeMediaTypePage {
 
     public static WebElement saveSettings(WebDriver driver)
     {
-        element = driver.findElement(By.xpath("//input[@id='edit-submit']"));
+        element = driver.findElement(By.xpath("//input[@data-drupal-selector='edit-submit']"));
         return element;
     }
 
@@ -83,7 +83,7 @@ public class YouTubeMediaTypePage {
         element.click();
     }
 
-    public static WebElement machine_readable_name(WebDriver driver)
+    public WebElement machineReadableName(WebDriver driver)
     {
         element = driver.findElement(By.xpath("//input[@data-drupal-selector='edit-field-name']"));
         return element;
@@ -91,14 +91,57 @@ public class YouTubeMediaTypePage {
 
     public void inputMachineReadableName(WebDriver driver, String machine_readable_name)
     {
-        element = machine_readable_name(driver);
+        element = machineReadableName(driver);
         element.sendKeys(machine_readable_name);
     }
 
-    public WebElement machineReadableName(WebDriver driver)
+    public WebElement fileExtension(WebDriver driver)
     {
-        element = driver.findElement(By.xpath("//input[@data-drupal-selector='edit-field-name']"));
+        element = driver.findElement(By.xpath("//input[@data-drupal-selector='edit-settings-file-extensions']"));
         return element;
+    }
+
+    public void inputFileExtensions(WebDriver driver, String fileExtensions)
+    {
+        element = fileExtension(driver);
+        element.sendKeys(fileExtensions);
+    }
+
+
+    public WebElement tagsCheckBox(WebDriver driver)
+    {
+        element = driver.findElement(By.xpath("//input[@data-drupal-selector='edit-settings-handler-settings-target-bundles-tags']"));
+        return element;
+    }
+
+    public void tickTagsCheckbox(WebDriver driver)
+    {
+        element = tagsCheckBox(driver);
+        element.click();
+    }
+
+    public WebElement youTubeCheckBox(WebDriver driver)
+    {
+        element = driver.findElement(By.xpath("//label[@for='edit-settings-allowed-providers-youtube']"));
+        return element;
+    }
+
+    public void tickYouTubeCheckbox(WebDriver driver)
+    {
+        element = youTubeCheckBox(driver);
+        element.click();
+    }
+
+    public WebElement videoCategoryAllowedValues(WebDriver driver)
+    {
+        element = driver.findElement(By.xpath("//textarea[@data-drupal-selector='edit-settings-allowed-values']"));
+        return element;
+    }
+
+    public void inputVideoCategoryAllowedValues(WebDriver driver, String allowedValues)
+    {
+        element = videoCategoryAllowedValues(driver);
+        element.sendKeys(allowedValues);
     }
 
 

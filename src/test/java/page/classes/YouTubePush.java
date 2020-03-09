@@ -55,8 +55,8 @@ public class YouTubePush {
     @Test
     public static void createYouTubeMediaType()
     {
-        driver.findElement(By.xpath(" //a[@id='toolbar-link-system-admin_structure']")).click();
-        driver.findElement(By.xpath("//span[contains(text(),'Media types')]")).click();
+        YouTubeReusableMethods youtube = new YouTubeReusableMethods(driver);
+        youtube.navigateToMediaTypePage();
         driver.findElement(By.linkText("Add media type")).click();
         driver.findElement(By.xpath(" //input[@id='edit-label']")).sendKeys("YouTube Media Type");
         driver.manage().timeouts().implicitlyWait(5000, TimeUnit.SECONDS);
@@ -95,13 +95,23 @@ public class YouTubePush {
     }
 
     @Test
-    public void createFieldsToYouTubeMediaType()
-    {
+    public void createFieldsToYouTubeMediaType() throws InterruptedException {
         YouTubeReusableMethods youtube = new YouTubeReusableMethods(driver);
         youtube.navigateToMediaTypePage();
         youtube.clickOnTheEditIfRowIsMatching("YouTube");
         youtube.navigateToYouTubeAddFieldsPage();
-        youtube.createYouTubePrivacyField();
+        youtube.createYouTubePrivacyField("Privacy_2");
+        youtube.createReferenceField("Local_video_file_2","file","mov, mp4, mpeg4, avi, wmv, flv, 3gp, mpegps, webm");
+        youtube.createReferenceField("Custom_Thumbnail_2","image","png, jpg, jpeg");
+        youtube.createField("Ext_video_URL_2","string");
+        youtube.createField("YouTube_Upload_Progress_2","yt_push_progress_bar");
+        youtube.createField("Description_2", "string_long");
+        youtube.createField("Ext_Custom_Thumbnail_HEAD_URL_2", "string_long");
+        youtube.createField("Ext_Custom_Thumbnail_URL_2", "string_long");
+        youtube.createField("Propagate_Changes_2","boolean");
+        youtube.createTaxonomyField("Tags_2","field_ui:entity_reference:taxonomy_term");
+        youtube.youTubeUploadField("YouTube_Upload_Field_2","video_embed_field");
+        youtube.videoCategoryField("Video_category_2","list_string");
     }
 
     @AfterTest

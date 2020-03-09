@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class YouTubeReusableMethods {
 
@@ -46,34 +47,95 @@ public class YouTubeReusableMethods {
 
     public void selectFieldFromDropDown(String dropdownValue, String label)
     {
-        WebElement dropdownOption = driver.findElement(By.xpath("//select[@id='edit-new-storage-type']"));
+        WebElement dropdownOption = driver.findElement(By.xpath("//select[@data-drupal-selector='edit-new-storage-type']"));
         Select dropdown =  new Select(dropdownOption);
-        List<WebElement> options = dropdown.getOptions();
-        for (WebElement e:options)
-        {
-            System.out.println(e.getText());
-        }
-        int numberOfOptions = dropdown.getOptions().size();
-        System.out.println(numberOfOptions);
         dropdown.selectByValue(dropdownValue);
         youTubeMediaTypePage.inputLabelField(driver,label);
         youTubeMediaTypePage.clickFieldSaveAndContinue(driver);
     }
 
-    public void createYouTubePrivacyField()
+    public void handleMachineReadableName(String machineReadable_field_name)
     {
-        selectFieldFromDropDown("yt_push_privacy", "Privacy 2");
-
         if(youTubeMediaTypePage.machineReadableName(driver).isDisplayed())
         {
-            youTubeMediaTypePage.inputMachineReadableName(driver,"privacy_2");
+            youTubeMediaTypePage.inputMachineReadableName(driver,machineReadable_field_name);
             youTubeMediaTypePage.clickFieldSaveAndContinue(driver);
         }
+    }
+
+    public void createYouTubePrivacyField(String youTubePrivacyField)
+    {
+        selectFieldFromDropDown("yt_push_privacy", youTubePrivacyField);
+        handleMachineReadableName(youTubePrivacyField.toLowerCase());
         youTubeMediaTypePage.clickSaveFieldSettings(driver);
         youTubeMediaTypePage.clickSaveSettings(driver);
         boolean statusMessageDisplayed = driver.findElement(By.xpath("//div[@aria-label='Status message']" )).isDisplayed();
         Assert.assertTrue(statusMessageDisplayed, "Saved Privacy 2 configuration.");
     }
+
+
+    public void createReferenceField(String FieldName, String fieldType, String FileExtensions)
+    {
+        youTubeMediaTypePage.clickYouTubeAddField(driver);
+        selectFieldFromDropDown(fieldType, FieldName);
+        handleMachineReadableName(FieldName.toLowerCase());
+        youTubeMediaTypePage.clickSaveFieldSettings(driver);
+        youTubeMediaTypePage.inputFileExtensions(driver,FileExtensions);
+        youTubeMediaTypePage.clickSaveSettings(driver);
+        boolean statusMessageDisplayed = driver.findElement(By.xpath("//div[@aria-label='Status message']" )).isDisplayed();
+        Assert.assertTrue(statusMessageDisplayed, "Saved" +FieldName+ "configuration.");
+    }
+
+    public void createField(String FieldName, String fieldType)
+    {
+        youTubeMediaTypePage.clickYouTubeAddField(driver);
+        selectFieldFromDropDown(fieldType,FieldName );
+        handleMachineReadableName(FieldName.toLowerCase());
+        youTubeMediaTypePage.clickSaveFieldSettings(driver);
+        youTubeMediaTypePage.clickSaveSettings(driver);
+        boolean statusMessageDisplayed = driver.findElement(By.xpath("//div[@aria-label='Status message']" )).isDisplayed();
+        Assert.assertTrue(statusMessageDisplayed, "Saved" +FieldName+ "configuration.");
+    }
+
+    public void createTaxonomyField(String FieldName, String fieldType) throws InterruptedException {
+        youTubeMediaTypePage.clickYouTubeAddField(driver);
+        selectFieldFromDropDown(fieldType,FieldName);
+        handleMachineReadableName(FieldName.toLowerCase());
+        youTubeMediaTypePage.clickSaveFieldSettings(driver);
+        youTubeMediaTypePage.tickTagsCheckbox(driver);
+        Assert.assertTrue(youTubeMediaTypePage.tagsCheckBox(driver).isSelected());
+        Thread.sleep(5000);
+        youTubeMediaTypePage.clickSaveSettings(driver);
+        boolean statusMessageDisplayed = driver.findElement(By.xpath("//div[@aria-label='Status message']" )).isDisplayed();
+        Assert.assertTrue(statusMessageDisplayed, "Saved" +FieldName+ "configuration.");
+    }
+
+    public void youTubeUploadField(String FieldName, String fieldType)
+    {
+        youTubeMediaTypePage.clickYouTubeAddField(driver);
+        selectFieldFromDropDown(fieldType,FieldName);
+        handleMachineReadableName(FieldName.toLowerCase());
+        youTubeMediaTypePage.clickSaveFieldSettings(driver);
+        youTubeMediaTypePage.tickYouTubeCheckbox(driver);
+        youTubeMediaTypePage.clickSaveSettings(driver);
+        boolean statusMessageDisplayed = driver.findElement(By.xpath("//div[@aria-label='Status message']" )).isDisplayed();
+        Assert.assertTrue(statusMessageDisplayed, "Saved" +FieldName+ "configuration.");
+    }
+
+    public void videoCategoryField(String FieldName, String fieldType)
+    {
+        youTubeMediaTypePage.clickYouTubeAddField(driver);
+        selectFieldFromDropDown(fieldType,FieldName);
+        handleMachineReadableName(FieldName.toLowerCase());
+        youTubeMediaTypePage.inputVideoCategoryAllowedValues(driver,"2|Autos & Vehicles\n" + "25|Comedy\n" + "27|Education\n" + "24|Entertainment\n" +
+                "1|Film & Animation\n" + "20|Gaming\n" + "26|Howto & Style\n" + "10|Music\n" + "25|News & Politics\n" + "29|Nonprofits & Activism\n" + "22|People & Blogs\n" +
+                "15|Pets & Animals\n" + "28|Science & Technology\n" + "17|Sports\n" + "19|Travel & Events\n");
+        youTubeMediaTypePage.clickSaveFieldSettings(driver);
+        youTubeMediaTypePage.clickSaveSettings(driver);
+        boolean statusMessageDisplayed = driver.findElement(By.xpath("//div[@aria-label='Status message']" )).isDisplayed();
+        Assert.assertTrue(statusMessageDisplayed, "Saved" +FieldName+ "configuration.");
+    }
+
 
 
     public void navigateToMediaTypePage()
