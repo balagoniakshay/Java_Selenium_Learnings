@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.List;
 
 public class YouTubeMediaTypePage {
 
@@ -144,5 +143,28 @@ public class YouTubeMediaTypePage {
         element.sendKeys(allowedValues);
     }
 
+    public WebElement videoSourceField(WebDriver driver)
+    {
+        element = driver.findElement(By.xpath("//select[@data-drupal-selector='edit-source-configuration-video-source-field']"));
+        return element;
+    }
+
+    public void selectVideoSourceField(WebDriver driver, String dropdownOption)
+    {
+        Select dropdown =  new Select(videoSourceField(driver));
+        dropdown.selectByValue(dropdownOption);
+    }
+
+    public WebElement editFromYouTubeMediaType(WebDriver driver)
+    {
+        element = driver.findElement(By.linkText("Edit"));
+        return element;
+    }
+
+    public void clickEdit(WebDriver driver)
+    {
+        element = editFromYouTubeMediaType(driver);
+        element.click();
+    }
 
 }

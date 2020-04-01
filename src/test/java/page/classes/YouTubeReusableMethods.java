@@ -1,8 +1,10 @@
 package page.classes;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -11,10 +13,16 @@ import java.util.concurrent.TimeUnit;
 
 public class YouTubeReusableMethods {
 
+    public static void main(String[] args) {
+
+    }
+
     private WebDriver driver;
     private StructurePage structurePage = new StructurePage();
     private YouTubeMediaTypePage youTubeMediaTypePage = new YouTubeMediaTypePage();
     private Homepage homepage = new Homepage();
+    private ExtendPage extendPage = new ExtendPage();
+    private LoginPage loginPage = new LoginPage();
 
     public YouTubeReusableMethods(WebDriver driver) {
         this.driver = driver;
@@ -150,5 +158,56 @@ public class YouTubeReusableMethods {
         youTubeMediaTypePage.clickYouTubeAddField(driver);
         Assert.assertTrue(driver.findElement(By.xpath("//select[@id='edit-new-storage-type']")).isDisplayed());
     }
+
+    public void createYouTubeMediaType()
+    {
+        navigateToMediaTypePage();
+        driver.findElement(By.linkText("Add media type")).click();
+        driver.findElement(By.xpath(" //input[@id='edit-label']")).sendKeys("YouTube Media Type");
+        driver.manage().timeouts().implicitlyWait(5000, TimeUnit.SECONDS);
+        WebElement editMachineReadableLink = driver.findElement(By.xpath("//button[@class='link']"));
+        WebElement machine_readable_name = driver.findElement(By.xpath("//input[@data-drupal-selector='edit-id']"));
+
+        if (editMachineReadableLink.isDisplayed())
+        {
+            machine_readable_name.sendKeys("youtube_media_type");
+        }
+
+        driver.findElement(By.xpath("//textarea[@id='edit-description']")).sendKeys("This is the YouTube Push Module Configuration");
+
+        Select mediaSource = new Select(driver.findElement(By.id("edit-source")));
+        mediaSource.selectByValue("yt_push_field");
+
+        String clientIDJSON = "{\"web\":{\"client_id\":\"1234.apps.googleusercontent.com\",\"client_secret\":\"secret\"}}";
+
+        driver.findElement(By.xpath("//input[@data-drupal-selector='edit-source-configuration-content-owner']")).sendKeys("content_owner_id_1");
+        driver.findElement(By.xpath("//textarea[@data-drupal-selector='edit-source-configuration-client-id-json']")).sendKeys(clientIDJSON);
+        driver.findElement(By.xpath("//input[@data-drupal-selector='edit-source-configuration-content-owner-channel']")).sendKeys("channel_id_1");
+        driver.findElement(By.xpath("//input[@data-drupal-selector='edit-submit']")).click();
+
+        if ((machine_readable_name.isDisplayed()))
+        {
+            machine_readable_name.sendKeys("youtube_media_type");
+            driver.findElement(By.xpath("//input[@data-drupal-selector='edit-submit']")).click();
+        }
+
+        driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
+        String successMessage = "The media type YouTube Media Type has been added.";
+
+        boolean success = driver.findElement(By.xpath("//div[@aria-label='Status message']" )).isDisplayed();
+        Assert.assertTrue(success, successMessage);
+        System.out.println("success: " + successMessage);
+    }
+
+    public void selectVideoSourceField(String VideoSourceField)
+    {
+        String currentURL = driver.getCurrentUrl();
+        if (!currentURL.equals("https://qa1.draco.turner.com/admin/structure/media/manage/youtube_media_type"))
+        {
+            driver.navigate().to("https://qa1.draco.turner.com/admin/structure/media/manage/youtube_media_type");
+        }
+        youTubeMediaTypePage.selectVideoSourceField(driver, VideoSourceField);
+    }
+
 
 }
