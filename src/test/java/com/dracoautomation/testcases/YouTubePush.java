@@ -1,18 +1,15 @@
-package page.classes;
+package com.dracoautomation.testcases;
 
+import com.dracoautomation.pageobjects.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
 
-public class YouTubePush {
+public class YouTubePush extends BaseClass {
 
     static WebDriver driver;
 
@@ -20,7 +17,7 @@ public class YouTubePush {
     private ExtendPage extendPage = new ExtendPage();
     private LoginPage loginPage = new LoginPage();
 
-    @BeforeTest
+//    @BeforeTest
     public void setup() throws InterruptedException
     {
         /*YouTubeReusableMethods youtube = new YouTubeReusableMethods(driver);
@@ -45,7 +42,8 @@ public class YouTubePush {
         Assert.assertTrue(driver.findElement(By.xpath("//label[@for='edit-uninstall-yt-push-test']")).isDisplayed());*/
     }
 
-//    @Test(priority = 1)
+
+    @Test(priority = 1)
     public static void createYouTubeMediaType()
     {
         YouTubeReusableMethods youtube = new YouTubeReusableMethods(driver);
@@ -72,18 +70,11 @@ public class YouTubePush {
         youtube.videoCategoryField("Video_category","list_string");
     }
 
-    @Test (priority = 3)
+//    @Test (priority = 3)
     public void configureYouTubeMediaType(){
         YouTubeReusableMethods youtube = new YouTubeReusableMethods(driver);
         youtube.selectVideoSourceField("field_ext_video_url");
 
     }
-
-//    @AfterTest
-    public static void closeBrowser()
-    {
-        driver.quit();
-    }
-
 }
 

@@ -1,4 +1,4 @@
-package page.classes;
+package com.dracoautomation.pageobjects;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
@@ -13,9 +13,6 @@ import java.util.concurrent.TimeUnit;
 
 public class YouTubeReusableMethods {
 
-    public static void main(String[] args) {
-
-    }
 
     private WebDriver driver;
     private StructurePage structurePage = new StructurePage();
@@ -26,6 +23,31 @@ public class YouTubeReusableMethods {
 
     public YouTubeReusableMethods(WebDriver driver) {
         this.driver = driver;
+    }
+
+//    @BeforeTest
+    public void setup() throws InterruptedException
+    {
+        /*YouTubeReusableMethods youtube = new YouTubeReusableMethods(driver);
+        youtube.youTubePushModuleSetup();*/
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        String baseURL = "https://qa1.draco.turner.com";
+        driver.get(baseURL);
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        loginPage.clickLoginLink(driver);
+        Thread.sleep(3000);
+        loginPage.fillUsername(driver);
+        loginPage.fillPassword(driver);
+        loginPage.clickLoginButton(driver);
+      /*  homepage.clickExtendLink(driver);
+        extendPage.inputModuleNameInputField(driver, "YouTube Push");
+        extendPage.clickInstallField(driver);
+        extendPage.clickUninstallLink(driver);
+        extendPage.inputModuleNameInputField(driver, "YouTube Push");
+        Assert.assertTrue(driver.findElement(By.xpath("//label[@for='edit-uninstall-yt-push']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//label[@for='edit-uninstall-yt-push-test']")).isDisplayed());*/
     }
 
     public void clickOnTheEditIfRowIsMatching(String rowValue)

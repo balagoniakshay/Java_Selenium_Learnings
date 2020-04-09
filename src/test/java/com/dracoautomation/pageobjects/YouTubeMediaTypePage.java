@@ -1,4 +1,4 @@
-package page.classes;
+package com.dracoautomation.pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
